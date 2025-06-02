@@ -21,11 +21,13 @@ import org.eclipse.edc.web.spi.WebService;
 
 public class HealthEndpointExtension implements ServiceExtension {
 
+    private static final String LOG_PREFIX_SETTING = "edc.health.logprefix";
     @Inject
     WebService webService;
 
     @Override
     public void initialize(ServiceExtensionContext context) {
-        webService.registerResource(new HealthApiController(context.getMonitor()));
+        var logPrefix = context.getSetting(LOG_PREFIX_SETTING, "health");
+        webService.registerResource(new HealthApiController(context.getMonitor(), logPrefix));
     }
 }

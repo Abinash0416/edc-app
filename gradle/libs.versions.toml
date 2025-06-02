@@ -11,6 +11,8 @@ edc-http = { module = "org.eclipse.edc:http", version.ref = "edc" }
 
 jakarta-rsApi = { module = "jakarta.ws.rs:jakarta.ws.rs-api", version.ref = "rsApi" }
 
+edc-configuration-filesystem = { module = "org.eclipse.edc:configuration-filesystem", version.ref = "edc" }
+
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version = "8.3.6" }

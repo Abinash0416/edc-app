@@ -2,5 +2,5 @@
 
 ```
 ./gradlew shadowJar
-java -jar app/build/libs/basic-connector.jar
+java -Dedc.fs.config=./config.properties -jar app/build/libs/connector.jar
 ```

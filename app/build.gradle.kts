@@ -10,6 +10,8 @@ dependencies {
     implementation(libs.edc.http)
 
     implementation(libs.jakarta.rsApi)
+
+    implementation(libs.edc.configuration.filesystem)
 }
 
 application {
@@ -18,5 +20,5 @@ application {
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     mergeServiceFiles()
-    archiveFileName.set("basic-connector.jar")
+    archiveFileName.set("connector.jar")
 }

@@ -1,0 +1,33 @@
+# # ---------- Stage 1: Build the JAR ----------
+# FROM eclipse-temurin:17-jdk AS builder
+
+# WORKDIR /app
+
+# # Copy build files
+# # COPY ./app /app
+# COPY . .
+
+# # Give exec permissions to the Gradle wrapper
+# RUN chmod +x ./gradlew
+
+# # Build the shadow JAR
+# RUN ./gradlew shadowJar
+
+# # ---------- Stage 2: Runtime ----------
+# FROM eclipse-temurin:17-jdk
+
+# WORKDIR /app
+
+# # Copy the JAR from the builder stage
+# # COPY --from=builder /app/build/libs/connector.jar /app/connector.jar
+
+# # Optional: copy OpenTelemetry agent if needed
+# # COPY opentelemetry-javaagent.jar /app/opentelemetry-javaagent.jar
+
+# # Default command will be set in docker-compose
+
+FROM openjdk:17-slim
+
+WORKDIR /app
+COPY app/build/libs/connector.jar /app/connector.jar
+COPY config.properties /app/config.properties

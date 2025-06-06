@@ -26,9 +26,30 @@
 
 # # Default command will be set in docker-compose
 
-FROM openjdk:17-slim
+# FROM openjdk:17-slim
 
-WORKDIR /
+# WORKDIR /app
 
-COPY build/libs/connector.jar /app/connector.jar
-COPY config.properties /app/config.properties
+# copy . .
+
+# ---- Stage 1: Build JAR ----
+FROM eclipse-temurin:17-jdk AS builder
+
+WORKDIR /workspace
+
+# Go up from app/, get the whole project
+COPY ../.. .
+
+RUN chmod +x ./gradlew
+RUN ./gradlew :app:shadowJar
+
+# ---- Stage 2: Runtime ----
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+COPY --from=builder /workspace/app/build/libs/connector.jar ./connector.jar
+# COPY config.properties ./config.properties
+COPY app/config.properties ./config.properties
+
+ENTRYPOINT ["java", "-Dedc.fs.config=/app/config.properties", "-jar", "connector.jar"]

@@ -1,11 +1,32 @@
 version: '3.8'
 
+# services:
+#   connector:
+#     build:
+#       context: app
+#     volumes:
+#       - ./:/app
+#     ports:
+#       - '19191:19191'
+#       - '19192:19192'
+#       - '19193:19193'
+#       - '19194:19194'
+#       - '19195:19195'
+#       - '19291:19291'
+#     # command: ['sleep', '3600']
+#     entrypoint:
+#       [
+#         'java',
+#         '-Dedc.fs.config=/app/config.properties',
+#         '-jar',
+#         '/app/build/libs/connector.jar',
+#       ]
+
 services:
   connector:
     build:
-      context: connector
-    volumes:
-      - ./:/connector
+      context: .
+      dockerfile: app/dockerfile
     ports:
       - '19191:19191'
       - '19192:19192'
@@ -13,10 +34,3 @@ services:
       - '19194:19194'
       - '19195:19195'
       - '19291:19291'
-    entrypoint:
-      [
-        'java',
-        '-Dedc.fs.config=/app/config.properties',
-        '-jar',
-        '/app/connector.jar',
-      ]
